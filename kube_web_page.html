@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Kubernetes Web Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <div class='header'>
+        <h1> KUBERNETES WEB PORTAL</h1>
+        <h2> LAUNCH PODS AND MANAGE</h2>
+    </div>
+    <div class ="row">
+        <div class='col' id="rowspan">
+            <input id="command" class="input1" type="text" placeholder="Enter your requirement" /> <br><br>
+            <button id="myBtn1" class="myBtn">Execute</button>
+        </div>
+        <div class="wrapper">
+            
+            <div class="wrap-1">
+                <input class="w" type="radio" id="tab-1" name="tabs">
+                <label for="tab-1"><div>To Launch a Pod</div><div class="cross"></div></label>
+                <div class="content">create pod name="name" image="image_name" <br> Example : create pod name=mypod1 image=centos</div>
+            </div>
+            
+            <div class="wrap-2">
+                <input class="w"  type="radio" id="tab-2" name="tabs">
+                <label for="tab-2"><div>To Create Deployment</div><div class="cross"></div></label>
+                <div class="content">create deployment name="name" image="image_name" <br> Example : create deployment name=mypod1 image=centos</div>
+            </div>
+            <div class="wrap-2">
+                <input class="w"  type="radio" id="tab-3" name="tabs">
+                <label for="tab-3"><div>To Expose Deployment</div><div class="cross"></div></label>
+                <div class="content">expose deployment name="name" port="port_number"  <br> Example : expose deployment name=mypod1 port=8080</div>
+            </div>
+            <div class="wrap-2">
+                <input class="w"  type="radio" id="tab-4" name="tabs">
+                <label for="tab-4"><div>Scale your Deployment</div><div class="cross"></div></label>
+                <div class="content">scale deployment name="name" replica="Number_of_pods"  <br> Example : scale deployment name=mypod1 replica=10</div>
+            </div>
+            <div class="wrap-2">
+                <input class="w"  type="radio" id="tab-5" name="tabs">
+                <label for="tab-5"><div>Destroy Specific Resource</div><div class="cross"></div></label>
+                <div class="content">destroy pod/deployment name="name"<br> Example : delete pod name=mypod1 <br> Example : delete deployment name=mypod1</div>
+            </div>
+            <div class="wrap-2">
+                <input class="w"  type="radio" id="tab-6" name="tabs">
+                <label for="tab-6"><div>Destroy Whole Environment</div><div class="cross"></div></label>
+                <div class="content">destroy all<br> Example : destroy all</div>
+            </div>
+
+        </div>
+    </div>
+            
+     <!-- The Modal -->
+     <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Output:-</h2>
+            </div>
+            <p id="text" class="modal-body">
+                Please wait...
+            </p>
+        </div>
+</body>
+<script>
+    var modal = document.getElementById("myModal");
+    var btn1 = document.getElementById("myBtn1");
+    btn1.onclick = function () {
+        modal.style.display = "block";
+        var z = document.getElementById('command').value ;
+        var objXHR = new XMLHttpRequest();
+        objXHR.open("GET", "http://192.168.1.18/cgi-bin/scipt.py?command=" + z, "true");
+        objXHR.send();
+        objXHR.onload = function () {
+                document.getElementById("text").innerHTML = objXHR.responseText;
+            }
+        
+    }
+
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    
+</script>
+</html>
